@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Node / frontend
+node_modules/
+dist/
+.vite/
+
+# Runtime data (never commit secrets, tokens, quarantine, reports)
+.usb-shield/
+*.log
+.env
+.env.local
+agent/data/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Coverage / build artifacts
+coverage/
+htmlcov/
+*.pem
+*.key
+certs/

@@ -1,0 +1,7 @@
+# USB Shield agent - runtime dependencies (pinned ranges, all actively maintained)
+fastapi>=0.110,<1.0
+uvicorn[standard]>=0.29,<1.0
+pydantic>=2.6,<3.0
+pydantic-settings>=2.2,<3.0
+argon2-cffi>=23.1        # Argon2id password hashing (optional accounts)
+cryptography>=42.0       # AES-256-GCM for the quarantine vault

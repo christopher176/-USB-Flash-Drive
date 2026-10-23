@@ -1,0 +1,42 @@
+# USB Shield local scanning agent - systemd user service.
+# Install: mkdir -p ~/.config/systemd/user && cp this file there, then:
+#   systemctl --user daemon-reload && systemctl --user enable --now usb-shield-agent
+[Unit]
+Description=USB Shield local scanning agent
+After=default.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/usb-shield/agent
+Environment=USBSHIELD_DATA_DIR=%h/.usb-shield
+Environment=USBSHIELD_BIND_HOST=127.0.0.1
+Environment=USBSHIELD_PORT=8765
+# Set to your real dashboard origin(s) - never "*".
+Environment=USBSHIELD_ALLOWED_ORIGINS=http://localhost:3847
+Environment=USBSHIELD_ACCOUNTS_ENABLED=false
+Environment=USBSHIELD_SESSION_SECURE=true
+Environment=USBSHIELD_DEV_DEMO=false
+ExecStart=/opt/usb-shield/agent/.venv/bin/python -m usb_shield
+Restart=on-failure
+RestartSec=3
+
+# --- least-privilege sandboxing -------------------------------------------
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+# Data dir (write), removable media roots (read; delete/eject needs write on
+# the device mount)
+ReadWritePaths=%h/.usb-shield /media /run/media
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictRealtime=true
+MemoryDenyWriteExecute=false        # Python requires WX segments
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=default.target

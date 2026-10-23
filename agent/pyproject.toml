@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "usb-shield"
+version = "0.1.0"
+description = "Secure USB flash-drive virus detection and removal - local agent"
+requires-python = ">=3.10"
+
+[tool.setuptools.packages.find]
+include = ["usb_shield*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = ["ignore::DeprecationWarning"]
